@@ -1,3 +1,23 @@
+When working on project
+Step1: Always Switch to the test branch
+git checkout test-branch
+
+Step 2: Pull the latest changes to stay updated
+git pull origin test-branch
+
+Step 2.5: Work on whatver you are working on
+
+Step 3: Add and commit your changes
+git add . 
+git commit -m ""
+
+Step 4: Push your changes to the test branch
+git push origin test-branch
+
+
+______________________________
+
+Miscellaneous
 database: https://students.washington.edu/is04/learn2code_db
 
 fileZilla: 
