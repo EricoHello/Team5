@@ -1,0 +1,6 @@
+database: https://students.washington.edu/is04/learn2code_db
+
+fileZilla: 
+sftp://vergil.u.washington.edu
+is04
+22
