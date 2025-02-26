@@ -18,9 +18,6 @@ npm install
 
 This will download all necessary dependencies based on the package.json file. The node_modules folder will not be included in the repository, so you must install these dependencies locally after pulling.
 
-Make Changes?
-Work on your assigned task. Ensure that any changes you make do not break existing functionality.
-
 Add and Commit Your Changes?
 After completing your work, add your changes to be tracked and commit them with a meaningful message:
 
