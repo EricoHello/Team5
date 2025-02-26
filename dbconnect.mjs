@@ -8,7 +8,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-const connection = mysql.createConnection({
+const db = mysql.createdb({
     host: "vergil.u.washington.edu",
     user: "root",
     password: "I118whenB210",
@@ -16,13 +16,20 @@ const connection = mysql.createConnection({
     port: 12455
 });
 
-connection.connect(function(err) {
+db.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
 });
 
 app.get('/lessons', (res) => {
-    connection.query("SELECT id, title, content, video_url FROM lessons", function(err, result) {
+    db.query("SELECT id, title, content, video_url FROM lessons", function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
+});
+
+app.get('/quiz/:lesson_id', (req, res) => {
+    db.query("SELECT id, question, choices, correct_answer FROM quizzes WHERE lesson_id = ?", [req.params.lesson_id], function(err, result) {
         if (err) throw err;
         res.send(result);
     })
