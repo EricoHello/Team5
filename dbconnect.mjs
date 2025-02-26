@@ -8,7 +8,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-const db = mysql.createdb({
+const db = mysql.createConnection({
     host: "vergil.u.washington.edu",
     user: "root",
     password: "I118whenB210",
