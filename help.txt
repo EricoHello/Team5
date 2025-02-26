@@ -1,26 +1,65 @@
-When working on project
-Step1: Always Switch to the test branch
+Updated help.txt for Team Collaboration
+
+When Working on the Project
+
+How to Switch to the Test Branch?
+
 git checkout test-branch
 
-Step 2: Pull the latest changes to stay updated
-git pull origin test-branch
+How to Pull the Latest Changes?
+To ensure you have the most up-to-date version of the project before starting your work:
 
-Step 2.5: Work on whatver you are working on
+git pull origin main
 
-Step 3: Add and commit your changes
-git add . 
-git commit -m ""
+Install Dependencies (If Needed)?
+After pulling changes, check if any new dependencies were added. Run the following command to install them:
 
-Step 4: Push your changes to the test branch
+npm install
+
+This will download all necessary dependencies based on the package.json file. The node_modules folder will not be included in the repository, so you must install these dependencies locally after pulling.
+
+Make Changes?
+Work on your assigned task. Ensure that any changes you make do not break existing functionality.
+
+Add and Commit Your Changes?
+After completing your work, add your changes to be tracked and commit them with a meaningful message:
+
+git add .
+git commit -m "Brief description of changes"
+
+Push Your Changes to the Test Branch?
+Once committed, push your changes to the test-branch:
+
 git push origin test-branch
 
-
-______________________________
+Step 7: Create a Pull Request (If Ready for Main Branch)
+If your changes are tested and working correctly, go to GitHub, create a pull request, and request to merge test-branch into main.
 
 Miscellaneous
-database: https://students.washington.edu/is04/learn2code_db
 
-fileZilla: 
-sftp://vergil.u.washington.edu
-is04
-22
+Database Access (phpMyAdmin)
+URL: https://students.washington.edu/is04/learn2code_db
+
+Server Access (FileZilla/SFTP)
+	•	Host: sftp://vergil.u.washington.edu
+	•	Username: is04
+	•	Port: 22
+
+Git Ignore Configuration
+The node_modules folder should not be included in the repository. Ensure that your .gitignore file includes:
+
+node_modules
+
+If node_modules was accidentally added before, remove it from tracking using:
+
+git rm -r --cached node_modules
+git commit -m "Removed node_modules from tracking"
+git push origin test-branch
+
+General Notes
+	•	Never push directly to main; always push to test-branch first.
+	•	Always pull the latest changes before starting new work to avoid conflicts.
+	•	If you experience any issues, check help.txt or the latest commits before asking for assistance.
+	•	If you need any changes made to the database, contact Eric, as he has access to modify it.
+
+ES
