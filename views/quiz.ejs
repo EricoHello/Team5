@@ -1,35 +1,17 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Quiz time!</title>
+    <title>Quiz Time</title>
 </head>
-
 <body>
-
-    <div class="quiz container">
-        <form id="quizForm" action="/submit-quiz" method="POST">
-            <% questions.forEach(question, index)=> { %>
-                <div class="question">
-                    <%= index + 1 %>. <%= question.text %>
-
-                </div>
-                <ul class="options">
-                    <% question.options.split(',').forEach(option, optionIndex)=> { %>
-                        <li>
-                            <label>
-                                <input type="radio" name="question<%= index %>" value="<%= optionIndex %>">
-                                <%= option.trim() %>
-                            </label>
-                        </li>
-                        <% }) %>
-                </ul>
-                <% }) %>
-                <button class="submit-btn" type="submit">Submit</button>
-        </form>
-
-    </div>
-
+    <% questions.forEach((question, index) => { %>
+        <p><%= index + 1 %>. <%= question.QuestionText %></p>
+        <ol>
+                <li><%= question.ChoiceA %></li>
+                <li><%= question.ChoiceB %></li>
+                <li><%= question.ChoiceC %></li>
+                <li><%= question.ChoiceD %></li>
+        </ol>
+    <% }); %>
 </body>
-
 </html>

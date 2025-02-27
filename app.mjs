@@ -1,4 +1,4 @@
-// index.mjs
+//app.mjs
 import express from 'express';
 import { connectToDatabase } from './dbconnect.mjs';
 
@@ -17,6 +17,7 @@ app.get('/quiz', async (req, res) => {
     try {
         // Query the database for quiz questions
         const result = await pool.request().query(`SELECT * FROM MultipleChoiceQuestions`);
+        console.log(result.recordset);
         // Pass the quiz questions to the view
         res.render('quiz', { questions: result.recordset });
     } catch (error) {
