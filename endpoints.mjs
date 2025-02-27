@@ -1,6 +1,6 @@
 // endpoints.mjs
 import express from 'express';
-import { connectToDatabase } from './dbConnection.mjs';
+import { connectToDatabase } from './dbconnect.mjs';
 
 const app = express();
 const port = 1234;
