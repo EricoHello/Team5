@@ -1,4 +1,4 @@
-// dbConnection.mjs
+// dbconnect.mjs
 import sql from 'mssql';
 import { config } from './config.mjs';
 

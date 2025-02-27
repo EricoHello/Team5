@@ -1,3 +1,6 @@
+//QueryDatabase runs queries but doesn't have any endpoints. 
+//It's a separate module that's imported into index.mjs and run there.
+//Mostly just using it for testing
 import { connectToDatabase } from './dbconnect.mjs';
 
 export async function queryDatabase() {
