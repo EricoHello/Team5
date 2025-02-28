@@ -2,10 +2,10 @@
 <html>
 <head>
     <title>Quiz Time</title>
-    <link rel="stylesheet" href="quiz.css">
+    <link rel="stylesheet" href="/quiz.css">
 </head>
 <body>
-    <form action="/submit-quiz" method="POST">
+    <form action="/submit-quiz/<%= lessonId %>" method="POST">
         <% questions.forEach((question, index) => { %>
             <p><%= index + 1 %>. <%= question.QuestionText %></p>
             <ol type = "a">

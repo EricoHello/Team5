@@ -2,9 +2,14 @@
 <html>
 <head>
     <title><%= title %></title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <h1><%= message %></h1>
-    <a href="/quiz">Take a quiz!</a>
+    <% lessons.forEach((lesson, index) => { %>
+        <p><%= index + 1 %>. <%= lesson.lessonName %></p>
+        <p><%= lesson.lessonDescription %></p>
+        <a href="/quiz/<%= lesson.LessonID %>" class="button">Take the <%= lesson.LessonName %> Quiz!</a>
+    <% }); %>
 </body>
 </html>
