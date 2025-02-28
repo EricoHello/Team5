@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+    <form>
+        <% questions.forEach((question, index) => { %>
+            <p><%= index + 1 %>. <%= question.QuestionText %></p>
+            <ol type="a">
+                <!--if(question.CorrectAnswer == 'A' {
+                    class = 'correct';
+                })-->
+                <li class="<%= question.CorrectAnswer === 'A' ? 'correct' : '' %>">
+                    <input type="radio" name="question<%= index %>" value="A" id="question<%= index %>A" <%= answers[`question${index}`] === 'A' ? 'checked' : '' %>>
+                    <label for="question<%= index %>A"><%= question.ChoiceA %></label>
+                </li>
+                <li class="<%= question.CorrectAnswer === 'B' ? 'correct' : '' %>">
+                    <input type="radio" name="question<%= index %>" value="B" id="question<%= index %>B" <%= answers[`question${index}`] === 'B' ? 'checked' : '' %>>
+                    <label for="question<%= index %>B"><%= question.ChoiceB %></label>
+                </li>
+                <li class="<%= question.CorrectAnswer === 'C' ? 'correct' : '' %>">
+                    <input type="radio" name="question<%= index %>" value="C" id="question<%= index %>C" <%= answers[`question${index}`] === 'C' ? 'checked' : '' %>>
+                    <label for="question<%= index %>C"><%= question.ChoiceC %></label>
+                </li>
+                <li class="<%= question.CorrectAnswer === 'D' ? 'correct' : '' %>">
+                    <input type="radio" name="question<%= index %>" value="D" id="question<%= index %>D" <%= answers[`question${index}`] === 'D' ? 'checked' : '' %>>
+                    <label for="question<%= index %>D"><%= question.ChoiceD %></label>
+                </li>
+            </ol>
+        <% }); %>
+    </form>
+</body>
+</html>
