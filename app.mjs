@@ -49,13 +49,19 @@ app.post('/submit-quiz/:lesson_id', async (req, res) => {
     res.render('submit-quiz', { questions, answers });
 });
 
-app.get('/api/questions', async (req, res) => {
+app.get('/api/quiz/:lesson_id', async (req, res) => {
     try {
-        let result = await pool.request().query('SELECT * FROM MultipleChoiceQuestions');
+        const lessonId = parseInt(req.params.lesson_id, 10);
+        // Query the database for quiz questions for the given lesson id
+        const result = await pool.request()
+            .input('lessonId', sql.Int, lessonId)
+            .query('SELECT * FROM MultipleChoiceQuestions WHERE LessonID = @lessonId');
+        console.log(`Sent quiz questions for lesson ${lessonId}`);
+        //send the json response with the quiz questions
         res.json(result.recordset);
-    } catch (err) {
-        console.error('Query failed: ', err);
-        res.status(500).send('Internal Server Error');
+    } catch (error) {
+        console.error('Error retrieving quiz questions', error);
+        res.status(500).send('Error retrieving quiz questions');
     }
 });
 
