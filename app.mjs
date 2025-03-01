@@ -15,38 +15,18 @@ let pool = await connectToDatabase();
 
 app.set('view engine', 'ejs');
 
-app.get('/', async (req, res) => {
-    const result = await pool.request().query('SELECT * FROM Lesson');
-    console.log(result.recordset);
-
-    res.render('index', { title: 'Home', message: 'Welcome to Learn2Code!', lessons: result.recordset });
-});
-
-app.get('/quiz/:lesson_id', async (req, res) => {
+app.get('/api/quiz/', async (req, res) => {
     try {
-        const lessonId = parseInt(req.params.lesson_id, 10);
-        // Query the database for quiz questions using a parameterized query
+        // Query the database for all quiz questions
         const result = await pool.request()
-            .input('lessonId', sql.Int, lessonId)
-            .query('SELECT * FROM MultipleChoiceQuestions WHERE LessonID = @lessonId');
-        console.log(result.recordset);
-        // Pass the quiz questions to the view
-        res.render('quiz', { questions: result.recordset, lessonId });
+            .query('SELECT * FROM MultipleChoiceQuestions');
+        console.log('Sent all quiz questions');
+        //send the json response with the quiz questions
+        res.json(result.recordset);
     } catch (error) {
         console.error('Error retrieving quiz questions', error);
         res.status(500).send('Error retrieving quiz questions');
     }
-});
-
-app.post('/submit-quiz/:lesson_id', async (req, res) => {
-    const lessonId = parseInt(req.params.lesson_id, 10);
-
-    const result = await pool.request()
-    .input('lessonId', sql.Int, lessonId)
-    .query('SELECT * FROM MultipleChoiceQuestions WHERE LessonID = @lessonId');
-    const questions = result.recordset;
-    const answers = req.body;
-    res.render('submit-quiz', { questions, answers });
 });
 
 app.get('/api/quiz/:lesson_id', async (req, res) => {
@@ -57,6 +37,30 @@ app.get('/api/quiz/:lesson_id', async (req, res) => {
             .input('lessonId', sql.Int, lessonId)
             .query('SELECT * FROM MultipleChoiceQuestions WHERE LessonID = @lessonId');
         console.log(`Sent quiz questions for lesson ${lessonId}`);
+        //send the json response with the quiz questions
+        res.json(result.recordset);
+    } catch (error) {
+        console.error('Error retrieving quiz questions', error);
+        res.status(500).send('Error retrieving quiz questions');
+    }
+});
+
+app.get('/api/quiz/language/:lang_name', async (req, res) => {
+    try {
+        const lang_name = req.params.lang_name;
+        // Query the database for quiz questions for the given lang_name
+        /**
+         * Available names:
+         * JavaScript
+         * Python
+         * general
+         * SQL
+         * HTML_CSS
+         */
+        const result = await pool.request()
+            .input('lang_name', sql.NVarChar, lang_name)
+            .query('SELECT * FROM MultipleChoiceQuestions WHERE language = @lang_name');
+        console.log(`Sent quiz questions for language ${lang_name}`);
         //send the json response with the quiz questions
         res.json(result.recordset);
     } catch (error) {
