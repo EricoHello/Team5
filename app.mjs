@@ -3,8 +3,10 @@ import express from 'express';
 import bodyParser from 'body-parser'
 import { connectToDatabase } from './dbconnect.mjs';
 import sql from 'mssql';
+import cors from 'cors';
 
 const app = express();
+app.use(cors())
 const port = 1234;
 
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -22,7 +22,6 @@ h3 {
 }
 
 button{
-    justify-content: flex-end;
     margin-right: 20px;
     font-size: 16px;
     padding: 12px 20px;
@@ -54,4 +53,29 @@ button{
   ol {
     display: flex;
     justify-content: flex-start;
+    align-items: start;
+    flex-direction: column;
   }
+
+  img {
+    width: 300px; 
+    height: 200px;
+  }
+
+  #languageChoices {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+#languageChoices > button {  
+    margin: 0px 10px 20px 20px; 
+    background-color: lightblue;
+}
+
+h1{
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
