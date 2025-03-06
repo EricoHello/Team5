@@ -3,6 +3,7 @@ import Home from './components/Home';
 import TestMe from './components/TestMe';
 import Projects from './components/Projects';
 import History from './components/History';
+import Account from './components/Account';
 
 
 import './App.css';
@@ -25,6 +26,7 @@ function App() {
           <button onClick={() => navigateToPage('testme')}>Test Me</button>
           <button onClick={() => navigateToPage('History')}>History</button>
           <button onClick={() => navigateToPage('Projects')}>Projects</button>
+          <button onClick={() => navigateToPage('Account')}>Account</button>
         </div>
       </header>
 
@@ -35,6 +37,7 @@ function App() {
           {page === 'testme' && <TestMe />}
           {page === 'History' && <History />}
           {page === 'Projects' && <Projects />}
+          {page === 'Account' && <Account />}
         </div>
       </div>
       <footer>
