@@ -4,6 +4,8 @@ import bodyParser from 'body-parser'
 import { connectToDatabase } from './dbconnect.mjs';
 import sql from 'mssql';
 import cors from 'cors';
+import fetch from 'node-fetch';
+import 'dotenv/config';
 
 const app = express();
 app.use(cors())
@@ -70,6 +72,72 @@ app.get('/api/quiz/language/:lang_name', async (req, res) => {
         res.status(500).send('Error retrieving quiz questions');
     }
 });
+
+app.get('/api/discord/messages', async (req, res) => {
+
+    const BOT_TOKEN = process.env.VITE_DISCORD_TOKEN;
+    const CHANNEL_ID = process.env.VITE_CHANNEL_ID;
+
+    try {
+        const url = `https://discord.com/api/v10/channels/${CHANNEL_ID}/messages`;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bot ${BOT_TOKEN}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorDetails = await response.json();
+            return res.status(response.status).json({
+                error: "Failed to fetch messages",
+                details: errorDetails
+            });
+        }
+
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: "Server Error" });
+    }
+});
+
+app.post('/api/discord/messages', async (req, res) => {
+    const { content } = req.body; 
+    const BOT_TOKEN = process.env.VITE_DISCORD_TOKEN;
+    const CHANNEL_ID = process.env.VITE_CHANNEL_ID;
+
+    if (!content) {
+        return res.status(400).json({ error: "Message content is required" });
+    }
+
+    try {
+        const url = `https://discord.com/api/v10/channels/${CHANNEL_ID}/messages`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bot ${BOT_TOKEN}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ content }) // Send message to Discord
+        });
+
+        if (!response.ok) {
+            const errorDetails = await response.json();
+            return res.status(response.status).json({
+                error: "Failed to send message",
+                details: errorDetails
+            });
+        }
+
+        const data = await response.json();
+        res.json({ message: "Message sent successfully", data });
+    } catch (error) {
+        res.status(500).json({ error: "Server Error" });
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

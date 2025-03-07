@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Home from './components/Home';
 import TestMe from './components/TestMe';
 import Projects from './components/Projects';
-import History from './components/History';
+import Discussion from './components/Discussion';
 
 
 import './App.css';
@@ -23,7 +23,7 @@ function App() {
           <h1 id="logo">Learn2Code</h1>
           <button onClick={() => navigateToPage('home')}>Home</button>
           <button onClick={() => navigateToPage('testme')}>Test Me</button>
-          <button onClick={() => navigateToPage('History')}>History</button>
+          <button onClick={() => navigateToPage('Discussion')}>Discussion</button>
           <button onClick={() => navigateToPage('Projects')}>Projects</button>
         </div>
       </header>
@@ -33,7 +33,7 @@ function App() {
         <div id="mainContent">
           {page === 'home' && <Home />}
           {page === 'testme' && <TestMe />}
-          {page === 'History' && <History />}
+          {page === 'Discussion' && <Discussion />}
           {page === 'Projects' && <Projects />}
         </div>
       </div>

@@ -153,7 +153,7 @@ const TestMe = () => {
 
     return (
         <div>
-            <h1>Pick a language and put your knowledge to the test!</h1>
+           <h1>Choose a Language & Challenge Your Skills!</h1>
             <div id="languageChoices">
                 <button onClick={() => setLanguage("HTML_CSS")}><img src="src/images/HTML.png" alt="HTML" /><h2>HTML & CSS Questions</h2></button>
                 <button onClick={() => setLanguage("JavaScript")}><img src="src/images/js.png" alt="JavaScript" /><h2>JavaScript Questions</h2></button>
