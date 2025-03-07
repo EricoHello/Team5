@@ -1,10 +1,12 @@
+import 'dotenv/config';
+
 export const config = {
-    user: 'team5-admin',
-    password: 'nDvT225@z2V7Ggr',
-    server: 'css-481-team.database.windows.net',
-    database: 'CSS_481_Proj_Db',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    server: process.env.DB_SERVER,
+    database: process.env.DB_NAME,
     options: {
-        encrypt: true,
-        enableArithAbort: true
+        encrypt: process.env.DB_ENCRYPT === "true",
+        enableArithAbort: process.env.DB_ARITHABORT === "true"
     }
 };
