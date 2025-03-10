@@ -1,25 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './style.css';
 
 const Account = () => {
-    const [user, setUser] = useState(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState(null);
+    const [error, setError] = useState("");
 
-    useEffect(() => {
-        // TODO: Fetch user data from backend API
-        fetch("https://your-backend.com/api/user", { credentials: 'include' })
-            .then(res => res.json())
-            .then(data => setUser(data))
-            .catch(err => console.error("Error fetching user data:", err));
-    }, []);
+    const fetchPassword = async () => {
+        setError("");
+        setPassword(null);
 
-    if (!user) return <p>Loading...</p>;
+        try {
+            const response = await fetch("http://localhost:1234/get-password", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setPassword(data.password);
+            } else {
+                setError(data.error || "Error fetching password");
+            }
+        } catch (err) {
+            setError("Failed to fetch");
+        }
+    };
 
     return (
         <div className="account-container">
-            <h2>Welcome, {user.name}</h2>
-            <p>Email: {user.email}</p>
-            <p>Member since: {new Date(user.created_at).toLocaleDateString()}</p>
-            <button onClick={() => alert("Logout function pending")}>Logout</button>
+            <h1>Enter Your Email</h1>
+            <input
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <button onClick={fetchPassword}>Get Password</button>
+
+            {password && <p>Your password: {password}</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
     );
 };

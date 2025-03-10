@@ -104,7 +104,7 @@ app.get('/api/discord/messages', async (req, res) => {
 });
 
 app.post('/api/discord/messages', async (req, res) => {
-    const { content } = req.body; 
+    const { content } = req.body;
     const BOT_TOKEN = process.env.VITE_DISCORD_TOKEN;
     const CHANNEL_ID = process.env.VITE_CHANNEL_ID;
 
@@ -138,6 +138,26 @@ app.post('/api/discord/messages', async (req, res) => {
     }
 });
 
+app.post("/get-password", async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) return res.status(400).json({ error: "Email is required" });
+
+        let pool = await connectToDatabase();
+        const result = await pool
+            .request()
+            .input("email", sql.VarChar, email)
+            .query("SELECT password FROM Users WHERE email = @email");
+
+        if (result.recordset.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.json({ password: result.recordset[0].password });
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
