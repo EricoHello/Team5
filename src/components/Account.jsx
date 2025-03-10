@@ -3,25 +3,43 @@ import './style.css';
 
 const Account = () => {
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState(null);
+    const [password, setPassword] = useState("");
+    const [userId, setUserId] = useState(null);
     const [error, setError] = useState("");
+    const [isSignup, setIsSignup] = useState(false);
 
-    const fetchPassword = async () => {
+    const validateInput = () => {
+        if (!email.includes("@")) {
+            setError("Invalid email format");
+            return false;
+        }
+        if (password.length < 8) {
+            setError("Password must be at least 8 characters");
+            return false;
+        }
+        return true;
+    };
+
+    const handleSubmit = async () => {
         setError("");
-        setPassword(null);
+        setUserId(null);
+
+        if (!validateInput()) return;
+
+        const endpoint = isSignup ? "signup" : "login";
 
         try {
-            const response = await fetch("http://localhost:1234/get-password", {
+            const response = await fetch(`http://localhost:1234/${endpoint}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ email, password }),
             });
 
             const data = await response.json();
             if (response.ok) {
-                setPassword(data.password);
+                setUserId(data.id);
             } else {
-                setError(data.error || "Error fetching password");
+                setError(data.error || "Request failed");
             }
         } catch (err) {
             setError("Failed to fetch");
@@ -30,17 +48,27 @@ const Account = () => {
 
     return (
         <div className="account-container">
-            <h1>Enter Your Email</h1>
+            <h1>{isSignup ? "Sign Up" : "Login"}</h1>
             <input
                 type="email"
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
-            <button onClick={fetchPassword}>Get Password</button>
+            <input
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <button onClick={handleSubmit}>{isSignup ? "Sign Up" : "Login"}</button>
 
-            {password && <p>Your password: {password}</p>}
+            {userId && <p>Your User ID: {userId}</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
+
+            <p onClick={() => setIsSignup(!isSignup)} style={{ cursor: "pointer", color: "blue" }}>
+                {isSignup ? "Already have an account? Login" : "Don't have an account? Sign up"}
+            </p>
         </div>
     );
 };

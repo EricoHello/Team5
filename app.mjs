@@ -138,22 +138,54 @@ app.post('/api/discord/messages', async (req, res) => {
     }
 });
 
-app.post("/get-password", async (req, res) => {
+app.post("/login", async (req, res) => {
     try {
-        const { email } = req.body;
-        if (!email) return res.status(400).json({ error: "Email is required" });
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ error: "Email and password are required" });
+        }
 
         let pool = await connectToDatabase();
         const result = await pool
             .request()
             .input("email", sql.VarChar, email)
-            .query("SELECT password FROM Users WHERE email = @email");
+            .input("password", sql.VarChar, password)
+            .query("SELECT id FROM Users WHERE email = @email AND password = @password");
 
         if (result.recordset.length === 0) {
-            return res.status(404).json({ error: "User not found" });
+            return res.status(401).json({ error: "Invalid credentials" });
         }
 
-        res.json({ password: result.recordset[0].password });
+        res.json({ id: result.recordset[0].id });
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+app.post("/signup", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ error: "Email and password are required" });
+        }
+
+        if (!email.includes("@")) {
+            return res.status(400).json({ error: "Invalid email format" });
+        }
+
+        if (password.length < 8) {
+            return res.status(400).json({ error: "Password must be at least 8 characters" });
+        }
+
+        let pool = await connectToDatabase();
+
+        const insertResult = await pool
+            .request()
+            .input("email", sql.VarChar, email)
+            .input("password", sql.VarChar, password)
+            .query("INSERT INTO Users (email, password) OUTPUT INSERTED.id VALUES (@email, @password)");
+
+        res.json({ id: insertResult.recordset[0].id });
     } catch (err) {
         res.status(500).send(err.message);
     }
