@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
-import './style.css';
+import react from "react";
 
 const Projects = () => {
     return (
-        <>
-            <h1> this is the Projects</h1>
-        </>
-    )
-};
-
+        <div>
+            <h1>Projects</h1>
+        </div>
+    );
+}
 
 export default Projects;
-
-
-

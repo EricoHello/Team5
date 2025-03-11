@@ -31,32 +31,3 @@ git push origin test-branch
 
 Step 7: Create a Pull Request (If Ready for Main Branch)
 If your changes are tested and working correctly, go to GitHub, create a pull request, and request to merge test-branch into main.
-
-Miscellaneous
-
-Database Access (phpMyAdmin)
-URL: https://students.washington.edu/is04/learn2code_db
-
-Server Access (FileZilla/SFTP)
-	•	Host: sftp://vergil.u.washington.edu
-	•	Username: is04
-	•	Port: 22
-
-Git Ignore Configuration
-The node_modules folder should not be included in the repository. Ensure that your .gitignore file includes:
-
-node_modules
-
-If node_modules was accidentally added before, remove it from tracking using:
-
-git rm -r --cached node_modules
-git commit -m "Removed node_modules from tracking"
-git push origin test-branch
-
-General Notes
-	•	Never push directly to main; always push to test-branch first.
-	•	Always pull the latest changes before starting new work to avoid conflicts.
-	•	If you experience any issues, check help.txt or the latest commits before asking for assistance.
-	•	If you need any changes made to the database, contact Eric, as he has access to modify it.
-
-ES

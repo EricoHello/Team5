@@ -191,6 +191,25 @@ app.post("/signup", async (req, res) => {
     }
 });
 
+// Fetch the latest challenge
+app.get("/api/daily-challenge", async (req, res) => {
+    try {
+        let pool = await connectToDatabase(); // Use connection pool
+        const result = await pool
+            .request()
+            .query("SELECT TOP 1 * FROM Challenges ORDER BY created_at DESC");
+
+        if (result.recordset.length === 0) {
+            return res.status(404).json({ error: "No challenges found in the database" });
+        }
+
+        res.json(result.recordset[0]); // Return the latest challenge
+    } catch (err) {
+        console.error("Database error:", err);
+        res.status(500).json({ error: "Error fetching challenge", details: err.message });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
