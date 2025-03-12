@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Stars } from '@react-three/drei';
 import './style.css';
 
 const Home = () => {
-
     return (
         <div className="home-container">
-            <h1 className="mission">Practice Coding with Learn2Code</h1>
-            <p className="description">Learn2Code offers interactive quizzes and exercises to improve your coding skills efficiently.</p>
+            <Canvas className="canvas-background">
+                <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
+                <ambientLight intensity={0.5} />
+                <pointLight position={[10, 10, 10]} />
+                <OrbitControls enableZoom={false} />
+            </Canvas>
+
+            <div className="overlay">
+                <h1 className="mission">Practice Coding with Learn2Code</h1>
+                <p className="description">Learn2Code offers interactive quizzes and exercises to improve your coding skills efficiently.</p>
+            </div>
         </div>
     );
 };
