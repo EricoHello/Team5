@@ -1,5 +1,16 @@
-Learn2Code - Quiz Application
+# Learn2Code - Interactive Quiz Application
 
-Learn2Code is a web-based quiz application designed to help users learn programming concepts interactively. It features a database-driven backend that stores lessons and quizzes for different programming languages, with a frontend that dynamically fetches and displays quiz questions. The project uses Node.js and MySQL for managing data and JavaScript for handling user interactions.
+## Overview
+Learn2Code is a web-based quiz platform designed to enhance programming knowledge through interactive quizzes. The application supports multiple programming languages, offering structured lessons and quizzes that adapt dynamically. The backend is built with **Node.js** and **MySQL**, while the frontend leverages **JavaScript** to handle user interactions efficiently.
 
-To contribute, always work on the test-branch, pull the latest changes before making edits, and push your updates after committing. Dependencies are managed via npm install, and node_modules should be excluded from the repository using .gitignore. If you need database modifications, contact the project lead.
+## Features
+- **Dynamic Quizzes:** Fetches and displays questions based on selected programming topics.
+- **Database-Driven Content:** Lessons and quiz questions are stored and managed via MySQL.
+- **Interactive Learning:** Provides immediate feedback to users for a hands-on coding experience.
+- **Modular & Scalable:** Built with a structured architecture to support future enhancements.
+
+## Development Setup
+### **1. Clone the Repository**
+```sh
+git clone https://github.com/EricoHello/Learn2Code.git
+cd Learn2Code
