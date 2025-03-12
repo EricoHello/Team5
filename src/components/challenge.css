@@ -2,21 +2,23 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 20px; 
+    gap: 20px;
     padding: 20px;
     text-align: left;
+    color: black;
 }
 
 .question {
-    flex: 1; 
+    flex: 1;
     height: fit-content;
     padding-bottom: 50px;
     background-color: white;
     padding-left: 20px;
 }
 
-.codingBox, pre {
-    flex: 1; 
+.codingBox,
+pre {
+    flex: 1;
     max-width: 50%;
 }
 

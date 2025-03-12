@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
-import './challenge.css';
+import './Challenge.css';
 
 const Challenge = () => {
     const [code, setCode] = useState("// Write your code here...");
