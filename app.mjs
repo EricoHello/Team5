@@ -210,6 +210,18 @@ app.get("/api/daily-challenge", async (req, res) => {
     }
 });
 
+app.get("/api/projects", async (req, res) => {
+    try {
+        let pool_result = await connectToDatabase();
+        const pool = await pool_result;
+        const result = await pool.request().query("SELECT * FROM Projects");
+        res.json(result.recordset);
+    } catch (error) {
+        console.error("Error fetching projects:", error);
+        res.status(500).json({ message: "Error fetching projects" });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
