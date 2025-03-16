@@ -96,6 +96,17 @@ footer {
   cursor: pointer;
 }
 
+#mainNav a {
+  padding: 10px;
+  margin: 5px;
+  text-decoration: none;
+  background-color: #00bfff;
+  color: white;
+  border-radius: 5px;
+  display: inline-block;
+  text-align: center;
+}
+
 .dropdown-content button:hover {
   background-color: #f1f1f1;
 }
