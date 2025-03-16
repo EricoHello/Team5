@@ -37,8 +37,8 @@ function App() {
             )}
           </div>
           <button onClick={() => navigateToPage('testme')}>Test Me</button>
-          <button onClick={() => navigateToPage('Account')}>Account</button>
           <button onClick={() => navigateToPage('Playground')}>Playground</button>
+          <button onClick={() => navigateToPage('Account')}>Account</button>
         </div>
       </header>
 
