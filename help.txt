@@ -9,7 +9,7 @@ git checkout test-branch
 How to Pull the Latest Changes?
 To ensure you have the most up-to-date version of the project before starting your work:
 
-git pull origin main
+git pull origin test-branch
 
 Install Dependencies (If Needed)?
 After pulling changes, check if any new dependencies were added. Run the following command to install them:

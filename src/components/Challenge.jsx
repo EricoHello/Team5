@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
+import './Challenge.css';
 
 const Challenge = () => {
     const [code, setCode] = useState("// Write your code here...");
@@ -10,7 +11,7 @@ const Challenge = () => {
     
     // Fetch daily challenge
     useEffect(() => {
-        fetch("http://localhost:1234/api/daily-challenge") // Ensure this matches your backend port
+        fetch("http://localhost:1234/api/daily-challenge") 
             .then((res) => {
                 if (!res.ok) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
@@ -63,27 +64,37 @@ const Challenge = () => {
     };
 
     return (
-        <div>
-            <h2>Challenge of the Day</h2>
-            <p><strong>{challenge.question}</strong></p>
-            <pre>Example Solution:</pre>
-            <pre>{challenge.example_code}</pre>
+        <>
+        <h2>Challenge of the Day</h2>
+        <div className="root">
+            
+            <div className="question">
+                <strong>{challenge.question}</strong>           
+                <p className="solution">Example Solution:</p>
+                <pre className="solution"><br/>{challenge.example_code}</pre>
+            </div>
 
             {/* Code Editor */}
-            <CodeMirror
-                value={code}
-                height="200px"
-                extensions={[javascript()]}
-                theme={oneDark}
-                onChange={(value) => setCode(value)}
-            />
+            <div className="codingBox">
+                <CodeMirror
+                    value={code}
+                    extensions={[javascript()]}
+                    width="100%"
+                    height="400px"
+                    theme={oneDark}
+                    onChange={(value) => setCode(value)}
+                />
 
-            <button onClick={runCode}>Run Code</button>
-            <button onClick={saveSubmission}>Submit</button>
+                <button onClick={runCode}>Run Code</button>
+                <button onClick={saveSubmission}>Submit</button>
 
-            <h3>Output:</h3>
-            <pre>{output}</pre>
+                <div className="output">
+                    <h3>Output:</h3>
+                    <pre>{output}</pre>
+                </div>
+            </div>
         </div>
+        </>
     );
 };
 

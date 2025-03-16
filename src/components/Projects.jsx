@@ -23,10 +23,28 @@ const Projects = () => {
         return (
             <div id="projectDetails">
                 <h1>{selectedProject.Name}</h1>
-                <p>{selectedProject.Description}</p>
+
+                {/* Flashcard */}
+                <h2>Step 1: Setting Up VS Code</h2>
+                <div id="flashcard">
+                    <h3>Step 1: Setting Up VS Code</h3>
+                    <p>
+                        <strong>Download and install VS Code</strong> from the official website:
+                        <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">
+                            https://code.visualstudio.com/
+                        </a>
+                    </p>
+                    <p>
+                        Once installed, open VS Code and create a new file by navigating to:
+                        <strong>File → New File</strong>.
+                    </p>
+                </div>
+                <button onClick>Back</button>
+                <button onClick>Next</button>
+
+                <br />
                 <a href={selectedProject.repoLink} target="_blank" rel="noopener noreferrer">View Repository</a>
                 <a href={selectedProject.demoLink} target="_blank" rel="noopener noreferrer">Live Demo</a>
-                <button onClick={() => setSelectedProject(null)}>Back to Projects</button>
             </div>
         );
     }

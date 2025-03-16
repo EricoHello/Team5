@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import './style.css';
+import './Account.css';
 
 const Account = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [userId, setUserId] = useState(null);
+    const [user, setUser] = useState(null);
     const [error, setError] = useState("");
     const [isSignup, setIsSignup] = useState(false);
 
@@ -22,7 +22,7 @@ const Account = () => {
 
     const handleSubmit = async () => {
         setError("");
-        setUserId(null);
+        setUser(null);
 
         if (!validateInput()) return;
 
@@ -37,7 +37,7 @@ const Account = () => {
 
             const data = await response.json();
             if (response.ok) {
-                setUserId(data.id);
+                setUser({ id: data.id, username: data.username || "User" });
             } else {
                 setError(data.error || "Request failed");
             }
@@ -45,6 +45,34 @@ const Account = () => {
             setError("Failed to fetch");
         }
     };
+
+    const handleLogout = () => {
+        setUser(null);
+        setEmail("");
+        setPassword("");
+        window.location.reload(); // Refresh the page to simulate logout
+    };
+
+    if (user) {
+        return (
+            <div className="account-container">
+                <h1>Welcome, {user.username}!</h1>
+                <p>Your email: {email}</p>
+
+                <div className="streak-box">
+                    <p>🔥 Your Streak: 1 Day</p>
+                    <p>Complete the **Challenge of the Day** to extend your streak!</p>
+                </div>
+
+                <h2>Account Settings</h2>
+                <button>Change Password</button>
+                <button>Update Email</button>
+                <button>Set Username</button>
+
+                <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            </div>
+        );
+    }
 
     return (
         <div className="account-container">
@@ -63,7 +91,6 @@ const Account = () => {
             />
             <button onClick={handleSubmit}>{isSignup ? "Sign Up" : "Login"}</button>
 
-            {userId && <p>Your User ID: {userId}</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             <p onClick={() => setIsSignup(!isSignup)} style={{ cursor: "pointer", color: "blue" }}>
