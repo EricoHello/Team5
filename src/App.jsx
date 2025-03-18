@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Account from './components/Account';
-import Challenge from './components/Challenge'; // Assuming you have a Challenge component
+import Challenge from './components/Challenge'; 
 import Discussion from './components/Discussion';
 import Home from './components/Home';
 import Playground from './components/Playground';
@@ -15,7 +15,7 @@ function App() {
 
   const navigateToPage = (pageName) => {
     setPage(pageName);
-    setShowResources(false); // Close dropdown when navigating
+    setShowResources(false); 
   };
 
   return (
@@ -49,7 +49,7 @@ function App() {
           {page === 'Discussion' && <Discussion />}
           {page === 'Projects' && <Projects />}
           {page === 'Account' && <Account />}
-          {page === 'Challenge' && <Challenge />} {/* New Challenge Component */}
+          {page === 'Challenge' && <Challenge />} 
           {page === 'Playground' && <Playground />}
         </div>
       </div>

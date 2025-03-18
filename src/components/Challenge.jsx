@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
-import './Challenge.css';
+import './challenge.css';
 
 const Challenge = () => {
     const [code, setCode] = useState("// Write your code here...");
@@ -33,8 +33,8 @@ const Challenge = () => {
                 },
                 body: JSON.stringify({
                     language: "javascript",
-                    version: "18.15.0", // Correct version
-                    runtime: "node", // Ensure we use Node.js
+                    version: "18.15.0", 
+                    runtime: "node", 
                     files: [{ content: code }],
                 }),
             });
@@ -67,7 +67,6 @@ const Challenge = () => {
         <>
         <h2>Challenge of the Day</h2>
         <div className="root">
-            
             <div className="question">
                 <strong>{challenge.question}</strong>           
                 <p className="solution">Example Solution:</p>

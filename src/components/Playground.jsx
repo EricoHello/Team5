@@ -1,7 +1,7 @@
 import Editor from "@monaco-editor/react";
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import "./style.css";
+import "./playground.css";
 
 const socket = io("http://localhost:4000");
 
@@ -87,7 +87,7 @@ const Playground = () => {
             <button onClick={runCode}>Run Code</button>
             <button onClick={() => setCode("// Write your JavaScript here!")}>Clear</button>
             
-            <div className="output">
+            <div className="outputPlayground">
                 <h2>Output:</h2>
                 <pre>{output}</pre>
             </div>
