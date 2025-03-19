@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 
+/**
+ * 
+ * This component displays a list of projects that users can explore. Users can click on a project 
+ * to view more details about it. The component fetches the project data from the server and displays
+ * it to the user.
+ */
 const Projects = () => {
     const [selectedProject, setSelectedProject] = useState(null);
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    /**
+     * This useEffect hook fetches the project data from the server when the component is mounted.
+     * It updates the projects state with the received data. If there is an error, the error state is updated.
+     * The loading state is set to false once the data is received.
+     */
     useEffect(() => {
         setLoading(true);
         fetch(`http://localhost:1234/api/projects`)
@@ -17,9 +28,14 @@ const Projects = () => {
             .catch(() => setLoading(false));
     }, []);
 
+    // Display loading message while fetching data
     if (loading) return <p>Loading projects...</p>;
 
     if (selectedProject) {
+        /**
+         * Display project details when a project is selected. This section displays the project name, 
+         * image, and description. It also includes a flashcard component that displays steps for the project
+         */
         return (
             <div id="projectDetails">
                 <h1>{selectedProject.Name}</h1>
@@ -49,6 +65,11 @@ const Projects = () => {
         );
     }
 
+    /**
+     * Display a list of projects for the user to choose from. Each project is displayed as a button
+     * with the project name and image. When a user clicks on a project, the setSelectedProject function is called
+     * to display the project details.
+     */
     return (
         <div>
             <h1>Select a Project to Explore</h1>

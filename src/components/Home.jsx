@@ -3,6 +3,11 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
 import './style.css';
 
+/**
+ * This is the home page of the application. It is minimalistic in nature and displays a welcome message and a 
+ * brief description of the application. The background is a 3D star field created 
+ * using Three.js and React Three Fiber.
+ */
 const Home = () => {
     return (
         <div className="home-container">

@@ -9,6 +9,11 @@ import TestMe from './components/TestMe';
 
 import './App.css';
 
+/**
+ * This is the main component of the application. It manages the navigation between different pages
+ * and renders the appropriate component based on the user's selection. The component also manages the 
+ * dropdown menu for resources.
+ */
 function App() {
   const [page, setPage] = useState('home');
   const [showResources, setShowResources] = useState(false);

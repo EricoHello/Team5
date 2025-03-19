@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
 import './Discussion.css';
-
+/**
+ * This component allows users to send and receive messages in a chat-like interface.
+ * Users can send messages to a Discord server via Bot and view messages from other users.
+ * The component fetches messages from the backend and allows users to send new messages.
+ */
 const Discussion = () => {
+    /**
+     * The following useState are used to store relevant information for the user.
+     */
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [newMessage, setNewMessage] = useState("");
 
-    // Fetch messages from backend
+    /**
+     * This useEffect hook fetches messages from the server when the component is mounted.
+     * It updates the messages state with the received data. If there is an error, the error state is updated.
+     * The loading state is set to false once the data is received.
+     */
     useEffect(() => {
         fetch("http://localhost:1234/api/discord/messages")
             .then(response => {
@@ -31,7 +42,11 @@ const Discussion = () => {
             });
     }, []);
 
-    // Handle message submission
+    /**
+     * This function sends a new message to the Discord server via the backend.
+     * It makes a POST request with the message content and updates the messages state with the new message.
+     * If there is an error, the error state is updated.
+     */
     const sendMessage = async () => {
         if (!newMessage.trim()) return;
 
@@ -62,6 +77,11 @@ const Discussion = () => {
         }
     };
 
+    /**
+     * This JSX code renders the discussion component.
+     * It displays the messages in a chat-like interface and allows users to send new messages
+     * via the sendMessage function
+     */
     return (
         <div className="discussion">
             <h2>Discord Messages</h2>
