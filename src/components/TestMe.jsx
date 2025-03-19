@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+// The recharts library is used for creating pie chart to make the quiz results more visual
+import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts'; 
 import './testme.css';
 
 const TestMe = () => {
+    /** 
+     * These useState variables are used to store different data related to the TestMe feature, from tracking the selected
+     * language and quiz data to managing user progress, answers, and final results. They also 
+     * keep track of quiz timing, loading status, and incorrect responses, updates values as things change.
+    */
     const [language, setLanguage] = useState("");
     const [quizData, setQuizData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -15,6 +21,11 @@ const TestMe = () => {
     const [correctAnswers, setCorrectAnswers] = useState([]);
     const [timeSpent, setTimeSpent] = useState(0);
 
+    /**
+     * This useEffect tracks how long the user spends on the quiz. If a language is selected and
+     * the results aren’t shown yet, it starts a setTinterval timer that updates timeSpent every second. When
+     * the component re-renders or the quiz ends, it clears the timer to prevent memory leaks.
+     * */
     useEffect(() => {
         let timer;
         if (!showResults && language) {
@@ -25,6 +36,12 @@ const TestMe = () => {
         return () => clearInterval(timer);
     }, [showResults, language]);
 
+    /**
+     * This useEffect fetches quiz questions when the user selects a language. It first ensures
+     * a language is chosen, then sets loading to true and resets the timer. It fetches data from
+     * the API, updates the quiz state with new questions, resets progress, and hides results. 
+     * If the request fails, it stops loading to prevent a frozen state.
+     */
     useEffect(() => {
         if (!language) return;
         setLoading(true);
@@ -45,10 +62,17 @@ const TestMe = () => {
             .catch(() => setLoading(false));
     }, [language]);
 
+    // This is a helper function that updates the selected answer for the current question.
     const handleSelection = (choice) => {
         setSelectedAnswers(prev => ({ ...prev, [currentQuestion]: choice }));
     };
 
+    /**
+     * This function checks the user's answer and updates their score. If the answer is correct, 
+     * it increases the correct count. If it's wrong, it saves the question, the user's incorrect answer, 
+     * and the correct one. Then, it moves to the next question or ends the quiz by showing the results if 
+     * there are no more questions left.
+     */
     const handleNextQuestion = () => {
         const currentQ = quizData[currentQuestion];
         const userAnswer = selectedAnswers[currentQuestion];
@@ -57,12 +81,14 @@ const TestMe = () => {
             if (currentQ[`Choice${currentQ.CorrectAnswer}`] === userAnswer) {
                 setCorrectCount(prev => prev + 1);
             } else {
+                // If the answer is wrong, store the details
                 setWrongQuestions(prev => [...prev, currentQ.QuestionText]);
                 setWrongAnswers(prev => [...prev, userAnswer]);
                 setCorrectAnswers(prev => [...prev, currentQ[`Choice${currentQ.CorrectAnswer}`]]);
             }
         }
         
+        // If more questions remain, move forward; otherwise, show results
         if (currentQuestion < quizData.length - 1) {
             setCurrentQuestion(prev => prev + 1);
         } else {
@@ -70,10 +96,17 @@ const TestMe = () => {
         }
     };
 
+    // This is just an informative message to show while the quiz questions are being fetched.
     if (loading) return <p>Loading questions...</p>;
 
+    /**
+     * This section displays the final quiz results. It calculates the percentage of correct and incorrect answers
+     * and display them using a pie chart. It also shows the user's total score, time spent on the quiz, and
+     * a list of incorrectly answered questions along with the correct answers. If all answers are correct, it shows
+     * a congratulatory message instead.
+     */
     if (showResults) {
-        const correctPercentage = (correctCount / quizData.length) * 100;
+        const correctPercentage = (correctCount / quizData.length) * 100;// Calculate the percentage of correct answers
         const wrongPercentage = 100 - correctPercentage;
         const data = [
             { name: "Correct", value: correctPercentage, color: "#00FA9A" },
@@ -113,6 +146,12 @@ const TestMe = () => {
         );
     }
 
+    /**
+     * This section displays the quiz questions and choices. It maps over the choices for the current question
+     * and displays them as radio buttons. It also shows navigation buttons to move between questions and a submit  
+     * button that becomes active only when the user selects an answer. The user can go back to the previous question
+     * or move to the next one. If the user is on the last question, the button text changes to "Submit".
+     */
     if (language && quizData.length > 0) {
         const currentQ = quizData[currentQuestion];
         const choices = [currentQ.ChoiceA, currentQ.ChoiceB, currentQ.ChoiceC, currentQ.ChoiceD];
@@ -151,6 +190,11 @@ const TestMe = () => {
         );
     }
 
+    /**
+     * This shows the initial screen where the user can choose a language to start the quiz. It displays
+     * buttons for different languages, each with an image and name. When a user clicks a button, it sets
+     * the language state to that choice, which triggers the useEffect to fetch quiz questions for that language.
+     */
     return (
         <div>
            <h1>Choose a Language & Challenge Your Skills!</h1>

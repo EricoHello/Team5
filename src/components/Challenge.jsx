@@ -4,12 +4,22 @@ import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import './challenge.css';
 
+/**
+ * This component displays the daily coding challenge and allows users to write and run code.
+ * The component fetches the daily challenge from the server and displays it to the user.
+ * Users can write code in the editor, run the code, and see the output.
+ * Users can also save their code submissions to the server.
+ */
 const Challenge = () => {
     const [code, setCode] = useState("// Write your code here...");
     const [output, setOutput] = useState("");
     const [challenge, setChallenge] = useState({});
     
-    // Fetch daily challenge
+    /**
+     * This effect fetches the daily challenge from the server when the component mounts.It sets the challenge 
+     * state with the fetched data. If there is an error fetching the challenge, an error message is logged
+     * to the console.
+     */
     useEffect(() => {
         fetch("http://localhost:1234/api/daily-challenge") 
             .then((res) => {
@@ -22,6 +32,12 @@ const Challenge = () => {
             .catch((err) => console.error("Error fetching challenge:", err));
     }, []);
 
+    /**
+     * This function sends the user's code to the server for execution using the EMKC API.
+     * It sends a POST request to the API with the code, language, version, and runtime information.
+     * The API response is then processed, and the output is set in the state.
+     * If there is an error during execution, an error message is displayed in the output area.
+     */
     const runCode = async () => {
         console.log("Running code...");
     
@@ -54,6 +70,11 @@ const Challenge = () => {
         }
     };
 
+    /**
+     * This function saves the user's code submission to the server.
+     * It sends a POST request to the server with the code and the user ID.
+     * If the submission is saved successfully, an alert is displayed to the user.
+     */ 
     const saveSubmission = async () => {
         await fetch("/api/save-submission", {
             method: "POST",
@@ -63,6 +84,14 @@ const Challenge = () => {
         alert("Submission Saved!");
     };
 
+    /**
+     * This component renders a coding challenge interface where the user can view a challenge question 
+     * and an example solution. It includes an interactive code editor powered by CodeMirror, allowing 
+     * the user to write and modify JavaScript code. The "Run Code" button triggers the execution of the 
+     * code, displaying the result in an output section. Additionally, the "Submit" button allows the user 
+     * to submit their code. The component maintains state for the code editor's value and dynamically updates 
+     * the output as the user interacts with the editor.
+     */
     return (
         <>
         <h2>Challenge of the Day</h2>
